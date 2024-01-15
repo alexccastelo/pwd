@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerador de Senhas</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    form {
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 5px;
+        width: 300px;
+        margin: auto;
+    }
+
+    input[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type=reset] {
+        background-color: #800101;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+    input[type=reset]:hover {
+        background-color: #720000;
+    }
+    h2 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+        font-size: 20px;
+        color: #333;
+    }
+</style>
+
+<h2>Gerador de Senhas_</h2>
+
+<form method="POST">
+  <input type="checkbox" id="lower" name="lower" value="lower">
+  <label for="lower"> Minúsculas</label><br>
+  <input type="checkbox" id="upper" name="upper" value="upper">
+  <label for="upper"> Maiúsculas</label><br>
+  <input type="checkbox" id="numbers" name="numbers" value="numbers">
+  <label for="numbers"> Números</label><br>
+  <input type="checkbox" id="symbols" name="symbols" value="symbols">
+  <label for="symbols"> Símbolos</label><br>
+  <label for="length">Tamanho:</label><br>
+  <input type="text" id="length" name="length"><br><br>
+  <input type="submit" value="Gerar">
+  <input type="reset" valeu="Limpar">
+</form>
+
+<p>Sua senha     é: {{ password }}</p>
+
+</body>
+</html>
