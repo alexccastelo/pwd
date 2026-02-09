@@ -61,8 +61,8 @@ const Dashboard: React.FC<DashboardProps> = ({ masterPassword, onLogout }) => {
         e.preventDefault();
 
         const url = editingId
-            ? `http://localhost:3001/passwords/${editingId}`
-            : 'http://localhost:3001/passwords';
+            ? `/passwords/${editingId}`
+            : '/passwords';
 
         const method = editingId ? 'PUT' : 'POST';
 
