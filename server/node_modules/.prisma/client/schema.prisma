@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  passwordHash String // Storage for Master Password Hash
+}
+
+model Credential {
+  id           Int      @id @default(autoincrement())
+  serviceName  String
+  login        String
+  encryptedPassword String // The actual password, encrypted
+  iv           String   // Initialization Vector for encryption
+  authTag      String   // Auth tag for GCM
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
