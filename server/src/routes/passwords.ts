@@ -124,4 +124,72 @@ router.post('/decrypt', async (req, res) => {
     }
 });
 
+// PUT /passwords/:id - Update credential
+router.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { serviceName, login, password, masterPassword } = req.body;
+
+        if (!masterPassword) {
+            return res.status(400).json({ error: 'Master Password required' });
+        }
+
+        // Verify Master Password
+        try {
+            await validateMasterPassword(masterPassword);
+        } catch (e) {
+            return res.status(401).json({ error: 'Invalid Master Password' });
+        }
+
+        const dataToUpdate: any = {};
+        if (serviceName) dataToUpdate.serviceName = serviceName;
+        if (login) dataToUpdate.login = login;
+
+        if (password) {
+            const salt = 'constant-salt-for-poc';
+            const key = deriveKey(masterPassword, salt);
+            const { encrypted, iv, authTag } = encrypt(password, key);
+            dataToUpdate.encryptedPassword = encrypted;
+            dataToUpdate.iv = iv;
+            dataToUpdate.authTag = authTag;
+        }
+
+        const updated = await prisma.credential.update({
+            where: { id: Number(id) },
+            data: dataToUpdate
+        });
+
+        res.json(updated);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to update password' });
+    }
+});
+
+// DELETE /passwords/:id - Delete credential
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { masterPassword } = req.body; // In a DELETE request, body is sometimes not parsed by default in some clients/proxies, but Express supports it. OR send as query param? JSON body is cleaner for sensitive data.
+
+        if (!masterPassword) {
+            return res.status(400).json({ error: 'Master Password required' });
+        }
+
+        // Verify Master Password
+        try {
+            await validateMasterPassword(masterPassword);
+        } catch (e) {
+            return res.status(401).json({ error: 'Invalid Master Password' });
+        }
+
+        await prisma.credential.delete({ where: { id: Number(id) } });
+
+        res.json({ message: 'Deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to delete password' });
+    }
+});
+
 export default router;
