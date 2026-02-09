@@ -30,7 +30,7 @@ const Dashboard: React.FC<DashboardProps> = ({ masterPassword, onLogout }) => {
 
     const fetchCredentials = async () => {
         try {
-            const res = await fetch('http://localhost:3001/passwords');
+            const res = await fetch('/passwords');
             if (res.ok) {
                 const data = await res.json();
                 setCredentials(data);
@@ -95,7 +95,7 @@ const Dashboard: React.FC<DashboardProps> = ({ masterPassword, onLogout }) => {
         if (!window.confirm('Are you sure you want to delete this credential?')) return;
 
         try {
-            const res = await fetch(`http://localhost:3001/passwords/${id}`, {
+            const res = await fetch(`/passwords/${id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ masterPassword })
@@ -126,7 +126,7 @@ const Dashboard: React.FC<DashboardProps> = ({ masterPassword, onLogout }) => {
         }
 
         try {
-            const res = await fetch('http://localhost:3001/passwords/decrypt', {
+            const res = await fetch('/passwords/decrypt', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, masterPassword })

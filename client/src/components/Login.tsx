@@ -25,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         const endpoint = needsSetup ? '/auth/init' : '/auth/login';
 
         try {
-            const response = await fetch(`http://localhost:3001${endpoint}`, {
+            const response = await fetch(`${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ password })
