@@ -20,7 +20,7 @@ This guide explains how to deploy the "pwd" application to your VPS using Coolif
 
 3. **Configuration**:
    - **Build Pack**: Select **Docker Compose**.
-   - **Docker Compose File**: Coolify should automatically detect `docker-compose.yml`.
+   - **Docker Compose File**: Coolify should automatically detect `docker-compose.yaml`.
    - **Domains**:
      - Set the domain for the frontend service.
      - You shouldn't need a domain for the backend if you are using internal Docker networking, but if you want external access to the API, set a domain for the `backend` service as well.
